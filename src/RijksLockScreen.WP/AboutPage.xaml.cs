@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Microsoft.Phone.Tasks;
 
 namespace RijksLockScreen.WP
 {
@@ -15,6 +16,16 @@ namespace RijksLockScreen.WP
     public AboutPage()
     {
       InitializeComponent();
+    }
+
+    private void EmailButton_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+      EmailComposeTask emailComposeTask = new EmailComposeTask();
+
+      emailComposeTask.Subject = "Rijksmuseum Lockscreen";
+      emailComposeTask.To = "michiel@michielpost.nl";
+      emailComposeTask.Show();
+
     }
   }
 }

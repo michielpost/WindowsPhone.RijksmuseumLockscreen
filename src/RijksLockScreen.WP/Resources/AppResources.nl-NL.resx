@@ -121,29 +121,29 @@
     <value>Rijksmuseum Lockscreen</value>
   </data>
   <data name="AppBarMenuItemText" xml:space="preserve">
-    <value>about</value>
+    <value>over deze app</value>
   </data>
   <data name="ButtonText" xml:space="preserve">
-    <value>Set as lockscreen</value>
+    <value>Zet als lockscreen</value>
   </data>
   <data name="ResourceFlowDirection" xml:space="preserve">
     <value>LeftToRight</value>
     <comment>Controls the FlowDirection for all elements in the RootFrame. Set to the traditional direction of this resource file's language</comment>
   </data>
   <data name="ResourceLanguage" xml:space="preserve">
-    <value>en-US</value>
+    <value>nl-NL</value>
     <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
   </data>
   <data name="UserOptionNo" xml:space="preserve">
-    <value>You said no, so I can't update your lockscreen.</value>
+    <value>De app kan het lockscreen niet updaten als je nee kiest.</value>
   </data>
   <data name="AboutText" xml:space="preserve">
-    <value>This app was developed using the Rijksmuseum API</value>
+    <value>Deze app is ontwikkeld met de Rijksmuseum API</value>
   </data>
   <data name="AppBarRate" xml:space="preserve">
-    <value>Rate this app</value>
+    <value>Beoordeel deze app</value>
   </data>
   <data name="EmailMe" xml:space="preserve">
-    <value>E-mail your suggestions or comments</value>
+    <value>E-mail de ontwikkelaar van deze app</value>
   </data>
 </root>

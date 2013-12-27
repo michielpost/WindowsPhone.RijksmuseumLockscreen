@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using RijksLockScreen.WP.Resources;
 using Microsoft.Phone.Scheduler;
+using Microsoft.Phone.Tasks;
 
 namespace RijksLockScreen.WP
 {
@@ -78,20 +79,32 @@ namespace RijksLockScreen.WP
 
     private void BuildLocalizedApplicationBar()
     {
-        // Set the page's ApplicationBar to a new instance of ApplicationBar.
-        ApplicationBar = new ApplicationBar();
-        ApplicationBar.Mode = ApplicationBarMode.Minimized;
+      // Set the page's ApplicationBar to a new instance of ApplicationBar.
+      ApplicationBar = new ApplicationBar();
+      ApplicationBar.Mode = ApplicationBarMode.Minimized;
 
-        // Create a new button and set the text value to the localized string from AppResources.
-        //ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-        //appBarButton.Text = AppResources.AppBarButtonText;
-        //ApplicationBar.Buttons.Add(appBarButton);
+      // Create a new button and set the text value to the localized string from AppResources.
+      //ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
+      //appBarButton.Text = AppResources.AppBarButtonText;
+      //ApplicationBar.Buttons.Add(appBarButton);
 
-        // Create a new menu item with the localized string from AppResources.
-        ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-        appBarMenuItem.Click += appBarMenuItem_Click;
-        ApplicationBar.MenuItems.Add(appBarMenuItem);
+      // Create a new menu item with the localized string from AppResources.
+      ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
+      appBarMenuItem.Click += appBarMenuItem_Click;
+      ApplicationBar.MenuItems.Add(appBarMenuItem);
+
+      ApplicationBarMenuItem rateMenuItem = new ApplicationBarMenuItem(AppResources.AppBarRate);
+      rateMenuItem.Click += rateMenuItem_Click;
+      ApplicationBar.MenuItems.Add(rateMenuItem);
+
     }
+
+    void rateMenuItem_Click(object sender, EventArgs e)
+    {
+      MarketplaceReviewTask marketplaceReviewTask = new MarketplaceReviewTask();
+      marketplaceReviewTask.Show();
+    }
+
 
     void appBarMenuItem_Click(object sender, EventArgs e)
     {

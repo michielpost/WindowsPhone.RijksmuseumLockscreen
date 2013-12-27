@@ -9,7 +9,7 @@ namespace RijksLockScreen.WP.Services
 {
   public static class LockHelper
   {
-    public async static void SetLock(string filePathOfTheImage, bool isAppResource)
+    public async static Task<bool> SetLock(string filePathOfTheImage, bool isAppResource)
     {
       try
       {
@@ -40,16 +40,20 @@ namespace RijksLockScreen.WP.Services
           // Get the URI of the lock screen background image.
           var currentImage = Windows.Phone.System.UserProfile.LockScreen.GetImageUri();
           System.Diagnostics.Debug.WriteLine("The new lock screen background image is set to {0}", currentImage.ToString());
+
+          return true;
         }
         else
         {
-          MessageBox.Show("You said no, so I can't update your background.");
+          //MessageBox.Show("You said no, so I can't update your background.");
         }
       }
       catch (System.Exception ex)
       {
         System.Diagnostics.Debug.WriteLine(ex.ToString());
       }
+
+      return false;
     }
 
   }

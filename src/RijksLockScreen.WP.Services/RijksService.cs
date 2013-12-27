@@ -23,7 +23,7 @@ namespace RijksLockScreen.WP.Services
 
     public RijksService()
     {
-      _client = new RijksClient("fpGQTuED");
+      _client = new RijksClient("EWkwIpWi");
     }
 
     public async Task<ArtObjectDetails> GetArtObjectAsync()

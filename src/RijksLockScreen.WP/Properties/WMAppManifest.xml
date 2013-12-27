@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
-  <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{6be2b516-0619-40c5-ac93-da0d4de48f5c}" Title="RijksLockScreen.WP" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="RijksLockScreen.WP author" Description="Sample description" Publisher="RijksLockScreen.WP" PublisherID="{6d328683-8ac1-4118-979a-f42cf7cd930f}">
+  <DefaultLanguage xmlns="" code="en" />
+  <Languages xmlns="">
+    <Language code="nl" />
+  </Languages>
+  <App xmlns="" ProductID="{6be2b516-0619-40c5-ac93-da0d4de48f5c}" Title="Rijksmuseum Lockscreen" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="M.R. Post" Description="Display the Rijksmuseum paintings on your lockscreen" Publisher="RijksLockScreen.WP" PublisherID="{6d328683-8ac1-4118-979a-f42cf7cd930f}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
@@ -12,20 +15,27 @@
     <Tokens>
       <PrimaryToken TokenID="RijksLockScreen.WPToken" TaskName="_default">
         <TemplateFlip>
-          <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
+          <SmallImageURI IsRelative="true" IsResource="false">
+          </SmallImageURI>
           <Count>0</Count>
-          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>RijksLockScreen.WP</Title>
+          <BackgroundImageURI IsRelative="true" IsResource="false">
+          </BackgroundImageURI>
+          <Title>
+          </Title>
           <BackContent>
           </BackContent>
-          <BackBackgroundImageURI>
+          <BackBackgroundImageURI IsRelative="true" IsResource="false">
           </BackBackgroundImageURI>
           <BackTitle>
           </BackTitle>
-          <DeviceLockImageURI>
+          <LargeBackgroundImageURI IsRelative="true" IsResource="false">
+          </LargeBackgroundImageURI>
+          <LargeBackContent />
+          <LargeBackBackgroundImageURI IsRelative="true" IsResource="false">
+          </LargeBackBackgroundImageURI>
+          <DeviceLockImageURI IsRelative="true" IsResource="false">
           </DeviceLockImageURI>
-          <HasLarge>
-          </HasLarge>
+          <HasLarge>True</HasLarge>
         </TemplateFlip>
       </PrimaryToken>
     </Tokens>

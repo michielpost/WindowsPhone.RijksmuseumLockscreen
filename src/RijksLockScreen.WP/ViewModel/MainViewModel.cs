@@ -3,11 +3,13 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using Q42.RijksmuseumApi.Models;
 using Q42.WinRT.Portable.Data;
+using RijksLockScreen.WP.Resources;
 using RijksLockScreen.WP.Services;
 using System;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace RijksLockScreen.WP.ViewModel
@@ -39,8 +41,6 @@ namespace RijksLockScreen.WP.ViewModel
 
       }
     }
-
-    private BitmapImage  myVar;
 
     public BitmapImage  ImageSource
     {
@@ -124,9 +124,12 @@ namespace RijksLockScreen.WP.ViewModel
 
     }
 
-    private void SetLockScreen()
+    private async void SetLockScreen()
     {
-      LockHelper.SetLock(ImageUri.AbsolutePath, false);
+      bool success = await LockHelper.SetLock(ImageUri.AbsolutePath, false);
+
+      if(!success)
+        MessageBox.Show(AppResources.UserOptionNo);
     }
 
   }
