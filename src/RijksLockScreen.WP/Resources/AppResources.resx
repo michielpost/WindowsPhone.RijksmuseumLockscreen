@@ -149,4 +149,7 @@
   <data name="ApiLanguage" xml:space="preserve">
     <value>en</value>
   </data>
+  <data name="DataError" xml:space="preserve">
+    <value>Could not load images. Check your internet connection and try again.</value>
+  </data>
 </root>

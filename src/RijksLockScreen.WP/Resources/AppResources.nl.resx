@@ -149,4 +149,7 @@
   <data name="ApiLanguage" xml:space="preserve">
     <value>nl</value>
   </data>
+  <data name="DataError" xml:space="preserve">
+    <value>Kon geen data laden. Check je internet connectie en probeer het nog eens.</value>
+  </data>
 </root>

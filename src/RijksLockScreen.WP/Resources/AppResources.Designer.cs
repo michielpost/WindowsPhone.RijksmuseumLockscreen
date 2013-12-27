@@ -115,6 +115,15 @@ namespace RijksLockScreen.WP.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not load images. Check your internet connection and try again..
+        /// </summary>
+        public static string DataError {
+            get {
+                return ResourceManager.GetString("DataError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-mail your suggestions or comments.
         /// </summary>
         public static string EmailMe {

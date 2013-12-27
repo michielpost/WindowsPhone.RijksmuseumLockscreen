@@ -18,7 +18,8 @@
    <shell:SystemTray.ProgressIndicator>
         <shell:ProgressIndicator 
             IsIndeterminate="{Binding DataLoader.IsBusy}"
-            IsVisible="{Binding DataLoader.IsBusy}" />
+            IsVisible="{Binding DataLoader.IsBusy}" 
+            />
     </shell:SystemTray.ProgressIndicator>
   
   <phone:PhoneApplicationPage.Resources>
@@ -71,6 +72,10 @@
           </StackPanel>
           
         </Grid>
+
+      <Grid Grid.Row="1" Margin="0,24,0,0"  Visibility="{Binding DataLoader.IsError, Converter={StaticResource Vis}}">
+       <TextBlock Margin="24,0,12,3" Text="{Binding Path=LocalizedResources.DataError, Source={StaticResource LocalizedStrings}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}"/>
+      </Grid>
 
     </Grid>
 

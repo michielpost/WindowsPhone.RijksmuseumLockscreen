@@ -116,7 +116,9 @@ namespace RijksLockScreen.WP.ViewModel
 
         ArtObject = await RijksService.GetArtObjectAsync();
 
-        return await RijksService.GetLocalImageUri(new Uri(ArtObject.WebImage.Url));
+        var result = await RijksService.GetLocalImageUri(new Uri(ArtObject.WebImage.Url));
+
+        return result;
         
       });
 
