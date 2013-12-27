@@ -64,9 +64,9 @@ namespace RijksLockScreen.WP.BackgroundTask
           if (!currentImage.AbsolutePath.Contains(url.ToCacheKey()))
           {
             var localUri = rijksService.GetLocalImageUri(url);
-            LockHelper.SetLock(url.AbsolutePath, false);
+            await LockHelper.SetLock(url.AbsolutePath, false);
 
-            sh.SaveAsync(DateTime.Now, fileName);
+            await sh.SaveAsync(DateTime.Now, fileName);
           }
 
         }
