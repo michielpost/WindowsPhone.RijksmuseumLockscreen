@@ -158,5 +158,14 @@ namespace RijksLockScreen.WP.Resources {
                 return ResourceManager.GetString("UserOptionNo", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current image is set as lockscreen wallpaper. Your lockscreen will be updated daily with new images..
+        /// </summary>
+        public static string UserOptionYes {
+            get {
+                return ResourceManager.GetString("UserOptionYes", resourceCulture);
+            }
+        }
     }
 }

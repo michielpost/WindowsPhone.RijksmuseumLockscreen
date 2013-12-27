@@ -152,4 +152,7 @@
   <data name="DataError" xml:space="preserve">
     <value>Kon geen data laden. Check je internet connectie en probeer het nog eens.</value>
   </data>
+  <data name="UserOptionYes" xml:space="preserve">
+    <value>Dit plaatje is nu je lockscreen. Dagelijks zal je lockscreen automatisch geupdate worden met een nieuw plaatje.</value>
+  </data>
 </root>

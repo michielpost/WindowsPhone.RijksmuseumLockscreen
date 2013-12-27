@@ -132,6 +132,9 @@ namespace RijksLockScreen.WP.ViewModel
 
       if(!success)
         MessageBox.Show(AppResources.UserOptionNo);
+      else
+        MessageBox.Show(AppResources.UserOptionYes);
+
     }
 
   }

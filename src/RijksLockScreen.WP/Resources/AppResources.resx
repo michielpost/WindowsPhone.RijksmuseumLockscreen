@@ -152,4 +152,7 @@
   <data name="DataError" xml:space="preserve">
     <value>Could not load images. Check your internet connection and try again.</value>
   </data>
+  <data name="UserOptionYes" xml:space="preserve">
+    <value>The current image is set as lockscreen wallpaper. Your lockscreen will be updated daily with new images.</value>
+  </data>
 </root>
