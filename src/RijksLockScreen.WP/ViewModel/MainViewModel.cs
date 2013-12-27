@@ -1,6 +1,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using Q42.RijksmuseumApi.Models;
 using Q42.WinRT.Portable.Data;
 using RijksLockScreen.WP.Services;
 using System;
@@ -63,6 +64,19 @@ namespace RijksLockScreen.WP.ViewModel
       
     }
 
+    private ArtObjectDetails _artObject;
+
+    public ArtObjectDetails ArtObject
+    {
+      get { return _artObject; }
+      set
+      {
+        _artObject = value;
+        RaisePropertyChanged(() => ArtObject);
+      }
+    }
+
+
 
     public DataLoader DataLoader { get; set; }
 
@@ -98,7 +112,13 @@ namespace RijksLockScreen.WP.ViewModel
 
     private async Task Initialize()
     {
-      var url = await DataLoader.LoadAsync(() => RijksService.DownloadImageAndGetLocalUriAsync());
+      var url = await DataLoader.LoadAsync(async () => {
+
+        ArtObject = await RijksService.GetArtObjectAsync();
+
+        return await RijksService.GetLocalImageUri(new Uri(ArtObject.WebImage.Url));
+        
+      });
 
       ImageUri = url;
 

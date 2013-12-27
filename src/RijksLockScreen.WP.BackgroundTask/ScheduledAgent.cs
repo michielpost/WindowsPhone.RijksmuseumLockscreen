@@ -53,7 +53,7 @@ namespace RijksLockScreen.WP.BackgroundTask
         var url = await rijksService.GetWeblUriAsync();
 
         //Check if it's not already the current image
-        if(!currentImage.AbsolutePath.Contains(url.ToCacheKey()))
+        if (!currentImage.AbsolutePath.Contains(url.ToCacheKey()))
         {
           var localUri = rijksService.GetLocalImageUri(url);
           LockHelper.SetLock(url.AbsolutePath, false);
@@ -61,6 +61,22 @@ namespace RijksLockScreen.WP.BackgroundTask
 
 
       }
+      //else
+      //{
+      //  // Do cleanup, since we are no longer the active lock screen provider.  
+      //  // This could be: delete images, stop the agent, etc...    
+      //  var periodicTask = ScheduledActionService.Find(task.Name) as PeriodicTask;
+      //  if (periodicTask != null)
+      //  {
+      //    try
+      //    {
+      //      ScheduledActionService.Remove(task.Name);
+      //    }
+      //    catch (Exception)
+      //    {
+      //    }
+      //  }
+      //}
 
 
       // If debugging is enabled, launch the agent again in one minute.

@@ -6,13 +6,25 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:q42converters="clr-namespace:Q42.WinRT.Converters;assembly=Q42.WinRT.Phone"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     DataContext="{Binding Main, Source={StaticResource Locator}}"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="False">
+  
+   <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator 
+            IsIndeterminate="{Binding DataLoader.IsBusy}"
+            IsVisible="{Binding DataLoader.IsBusy}" />
+    </shell:SystemTray.ProgressIndicator>
+  
+  <phone:PhoneApplicationPage.Resources>
+        <q42converters:VisibilityConverter x:Key="Vis" />
+        <q42converters:InverseVisibilityConverter x:Key="InverseVis" />
+    </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -41,15 +53,20 @@
          -->
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28" Background="#40474F">
-            <TextBlock Text="Rijksmuseum Lockscreen" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="0,0,0,0" Background="#40474F">
+            <TextBlock Text="Rijksmuseum Lockscreen" Style="{StaticResource PhoneTextExtraLargeStyle}" Margin="12,0,0,6"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0,0,0,0"  Visibility="{Binding ImageUri, Converter={StaticResource Vis}}">
+          <Grid.RowDefinitions>
+    <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
           <Image Source="{Binding ImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"  />
-          <!--<TextBlock Text="{Binding ObjectId}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>-->
-          <Button Content="Set as background" Command="{Binding SetLockScreenCommand}"></Button>
+          <TextBlock Margin="12,0,12,0" Text="{Binding ArtObject.Title}" VerticalAlignment="Bottom" Style="{StaticResource PhoneTextNormalStyle}"/>
+          
+        <Button Margin="12,0,12,0" Grid.Row="1" Content="Set as background"  Command="{Binding SetLockScreenCommand}" ></Button>
         </Grid>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are

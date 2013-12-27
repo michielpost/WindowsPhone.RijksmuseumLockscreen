@@ -1,5 +1,6 @@
 ﻿using Q42.RijksmuseumApi;
 using Q42.RijksmuseumApi.Interfaces;
+using Q42.RijksmuseumApi.Models;
 using Q42.WinRT.Data;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace RijksLockScreen.WP.Services
 {
   public interface IRijksService
   {
-    Task<Uri> DownloadImageAndGetLocalUriAsync();
+    Task<ArtObjectDetails> GetArtObjectAsync();
     Task<Uri> GetWeblUriAsync();
     Task<Uri> GetLocalImageUri(Uri webUri);
   }
@@ -25,14 +26,15 @@ namespace RijksLockScreen.WP.Services
       _client = new RijksClient("fpGQTuED");
     }
 
-    public async Task<Uri> DownloadImageAndGetLocalUriAsync()
+    public async Task<ArtObjectDetails> GetArtObjectAsync()
     {
-      //Get current object id
-      var url = await GetWeblUriAsync();
+      var objectOfTheDay = await _client.GetObjectOfTheDay();
+      var currentObject = await _client.GetCollectionDetails(objectOfTheDay);
+      var currentArtObject = currentObject.ArtObject;
 
-      var local = await GetLocalImageUri(url);
+      currentArtObject.WebImage.Url = currentArtObject.WebImage.Url.Replace("=s0", "=s768-c");
 
-      return local;
+      return currentArtObject;
     }
 
     public async Task<Uri> GetWeblUriAsync()
@@ -64,7 +66,9 @@ namespace RijksLockScreen.WP.Services
         await WebDataCache.ClearAll();
 
       }
-      catch { }
+      catch(Exception e) 
+      {
+      }
 
       //Download and save image
       var localUri = await WebDataCache.GetLocalUriAsync(webUri);

@@ -24,8 +24,7 @@ namespace RijksLockScreen.WP
 
       StartPeriodicAgent();
 
-      // Sample code to localize the ApplicationBar
-      //BuildLocalizedApplicationBar();
+      BuildLocalizedApplicationBar();
     }
 
     private void StartPeriodicAgent()
@@ -77,21 +76,27 @@ namespace RijksLockScreen.WP
     }
 
 
-    // Sample code for building a localized ApplicationBar
-    //private void BuildLocalizedApplicationBar()
-    //{
-    //    // Set the page's ApplicationBar to a new instance of ApplicationBar.
-    //    ApplicationBar = new ApplicationBar();
+    private void BuildLocalizedApplicationBar()
+    {
+        // Set the page's ApplicationBar to a new instance of ApplicationBar.
+        ApplicationBar = new ApplicationBar();
+        ApplicationBar.Mode = ApplicationBarMode.Minimized;
 
-    //    // Create a new button and set the text value to the localized string from AppResources.
-    //    ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-    //    appBarButton.Text = AppResources.AppBarButtonText;
-    //    ApplicationBar.Buttons.Add(appBarButton);
+        // Create a new button and set the text value to the localized string from AppResources.
+        //ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
+        //appBarButton.Text = AppResources.AppBarButtonText;
+        //ApplicationBar.Buttons.Add(appBarButton);
 
-    //    // Create a new menu item with the localized string from AppResources.
-    //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-    //    ApplicationBar.MenuItems.Add(appBarMenuItem);
-    //}
+        // Create a new menu item with the localized string from AppResources.
+        ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
+        appBarMenuItem.Click += appBarMenuItem_Click;
+        ApplicationBar.MenuItems.Add(appBarMenuItem);
+    }
+
+    void appBarMenuItem_Click(object sender, EventArgs e)
+    {
+      NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
+    }
 
 
     /// <summary>
