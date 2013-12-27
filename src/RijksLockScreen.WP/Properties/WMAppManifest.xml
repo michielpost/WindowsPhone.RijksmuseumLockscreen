@@ -15,11 +15,9 @@
     <Tokens>
       <PrimaryToken TokenID="RijksLockScreen.WPToken" TaskName="_default">
         <TemplateFlip>
-          <SmallImageURI IsRelative="true" IsResource="false">
-          </SmallImageURI>
+          <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
           <Count>0</Count>
-          <BackgroundImageURI IsRelative="true" IsResource="false">
-          </BackgroundImageURI>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
           <Title>
           </Title>
           <BackContent>
@@ -28,8 +26,7 @@
           </BackBackgroundImageURI>
           <BackTitle>
           </BackTitle>
-          <LargeBackgroundImageURI IsRelative="true" IsResource="false">
-          </LargeBackgroundImageURI>
+          <LargeBackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileLarge.png</LargeBackgroundImageURI>
           <LargeBackContent />
           <LargeBackBackgroundImageURI IsRelative="true" IsResource="false">
           </LargeBackBackgroundImageURI>
