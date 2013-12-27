@@ -70,6 +70,15 @@ namespace RijksLockScreen.WP.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to en.
+        /// </summary>
+        public static string ApiLanguage {
+            get {
+                return ResourceManager.GetString("ApiLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to about.
         /// </summary>
         public static string AppBarMenuItemText {

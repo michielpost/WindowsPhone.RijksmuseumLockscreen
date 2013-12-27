@@ -21,9 +21,9 @@ namespace RijksLockScreen.WP.Services
   {
     public IRijksClient _client;
 
-    public RijksService()
+    public RijksService(string language = "en")
     {
-      _client = new RijksClient("EWkwIpWi");
+      _client = new RijksClient("EWkwIpWi", language);
     }
 
     public async Task<ArtObjectDetails> GetArtObjectAsync()

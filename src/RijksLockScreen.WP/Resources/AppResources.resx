@@ -146,4 +146,7 @@
   <data name="EmailMe" xml:space="preserve">
     <value>E-mail your suggestions or comments</value>
   </data>
+  <data name="ApiLanguage" xml:space="preserve">
+    <value>en</value>
+  </data>
 </root>

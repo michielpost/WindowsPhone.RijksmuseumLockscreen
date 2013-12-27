@@ -15,6 +15,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using RijksLockScreen.WP.Resources;
 using RijksLockScreen.WP.Services;
 
 namespace RijksLockScreen.WP.ViewModel
@@ -43,7 +44,7 @@ namespace RijksLockScreen.WP.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register<IRijksService, RijksService>();
+            SimpleIoc.Default.Register<IRijksService>(() => { return new RijksService(AppResources.ApiLanguage); });
 
 
             SimpleIoc.Default.Register<MainViewModel>();
