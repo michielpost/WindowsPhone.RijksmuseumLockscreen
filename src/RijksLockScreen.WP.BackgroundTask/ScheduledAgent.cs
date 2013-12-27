@@ -45,20 +45,31 @@ namespace RijksLockScreen.WP.BackgroundTask
     {
       if (LockScreenManager.IsProvidedByCurrentApplication)
       {
-        // Get the URI of the lock screen background image.
-        // NOTE: GetImageUri throws is the app is not the current application 
-        var currentImage = LockScreen.GetImageUri();
+        string fileName = "lastUpdate";
+        Q42.WinRT.Storage.StorageHelper<DateTime?> sh = new Q42.WinRT.Storage.StorageHelper<DateTime?>(Q42.WinRT.Storage.StorageType.Local);
+        var lastUpdate = await sh.LoadAsync(fileName);
 
-        var rijksService = new RijksService();
-        var url = await rijksService.GetWeblUriAsync();
-
-        //Check if it's not already the current image
-        if (!currentImage.AbsolutePath.Contains(url.ToCacheKey()))
+        if (!lastUpdate.HasValue
+          || lastUpdate.Value.Date != DateTime.Now.Date)
         {
-          var localUri = rijksService.GetLocalImageUri(url);
-          LockHelper.SetLock(url.AbsolutePath, false);
-        }
 
+          // Get the URI of the lock screen background image.
+          // NOTE: GetImageUri throws is the app is not the current application 
+          var currentImage = LockScreen.GetImageUri();
+
+          var rijksService = new RijksService();
+          var url = await rijksService.GetWeblUriAsync();
+
+          //Check if it's not already the current image
+          if (!currentImage.AbsolutePath.Contains(url.ToCacheKey()))
+          {
+            var localUri = rijksService.GetLocalImageUri(url);
+            LockHelper.SetLock(url.AbsolutePath, false);
+
+            sh.SaveAsync(DateTime.Now, fileName);
+          }
+
+        }
 
       }
       //else
