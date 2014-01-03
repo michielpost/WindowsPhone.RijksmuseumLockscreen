@@ -47,7 +47,7 @@ namespace RijksLockScreen.WP
       // load description from localized strings 
       periodicTask.Description = "This is Lockscreen image provider app.";
       // set expiration days    
-      periodicTask.ExpirationTime = DateTime.Now.AddDays(14);
+      periodicTask.ExpirationTime = DateTime.Now.AddDays(3);
       try
       {
         // add this to scheduled action service 

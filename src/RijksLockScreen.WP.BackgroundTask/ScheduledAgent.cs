@@ -2,8 +2,6 @@
 using System.Windows;
 using Microsoft.Phone.Scheduler;
 using Windows.Phone.System.UserProfile;
-using RijksLockScreen.WP.Services;
-using Q42.WinRT;
 using System;
 using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Info;
@@ -34,6 +32,17 @@ namespace RijksLockScreen.WP.BackgroundTask
       }
     }
 
+    void FreeMemory()
+    {
+
+      GC.Collect();
+
+      GC.WaitForPendingFinalizers();
+
+      GC.Collect();
+
+    }
+
     /// <summary>
     /// Agent that runs a scheduled task
     /// </summary>
@@ -45,10 +54,8 @@ namespace RijksLockScreen.WP.BackgroundTask
     /// </remarks>
     protected override async void OnInvoke(ScheduledTask task)
     {
-#if(DEBUG) 
-      var a = DeviceStatus.ApplicationCurrentMemoryUsage;
-      if (a != null) { }
-#endif
+
+      Debug.WriteLine("Start: {0}", DeviceStatus.ApplicationPeakMemoryUsage);
 
       //Only run when there is internet connection
       if (DeviceNetworkInformation.IsNetworkAvailable
@@ -57,46 +64,52 @@ namespace RijksLockScreen.WP.BackgroundTask
 
         if (LockScreenManager.IsProvidedByCurrentApplication)
         {
-          string fileName = "lastUpdate";
-          Q42.WinRT.Storage.StorageHelper<DateTime?> sh = new Q42.WinRT.Storage.StorageHelper<DateTime?>(Q42.WinRT.Storage.StorageType.Local);
-          var lastUpdate = await sh.LoadAsync(fileName);
+          //string fileName = "lastUpdate";
+          //Q42.WinRT.Storage.StorageHelper<DateTime?> sh = new Q42.WinRT.Storage.StorageHelper<DateTime?>(Q42.WinRT.Storage.StorageType.Local);
+          //var lastUpdate = await sh.LoadAsync(fileName);
 
-#if(DEBUG)
-          a = DeviceStatus.ApplicationCurrentMemoryUsage;
-          if (a != null) { }
-#endif
-
-          if (!lastUpdate.HasValue
-            || lastUpdate.Value.Date != DateTime.Now.Date)
-          {
+          //if (!lastUpdate.HasValue
+          //  || lastUpdate.Value.Date != DateTime.Now.Date)
+          //{
 
             // Get the URI of the lock screen background image.
             // NOTE: GetImageUri throws is the app is not the current application 
             var currentImage = LockScreen.GetImageUri();
 
-            var rijksService = new RijksService();
-            var url = await rijksService.GetWeblUriAsync();
+            Debug.WriteLine("Start GetWeblUriAsync: {0}", DeviceStatus.ApplicationPeakMemoryUsage);
+            var url = await CustomRijksService.GetWeblUriAsync();
+            Debug.WriteLine("Finish GetWeblUriAsync: {0}", DeviceStatus.ApplicationPeakMemoryUsage);
 
- #if(DEBUG)  
-            a = DeviceStatus.ApplicationCurrentMemoryUsage;
-            if (a != null) { }
-#endif
+
+            FreeMemory();
+
+            string key = "A.jpg";
+            if (currentImage.AbsolutePath.Contains("A.jpg"))
+              key = "B.jpg";
 
             //Check if it's not already the current image
-            if (!currentImage.AbsolutePath.Contains(url.ToCacheKey()))
-            {
-              var localUri = rijksService.GetLocalImageUri(url);
-              await LockHelper.SetLock(url.AbsolutePath, false);
+            //if (!currentImage.AbsolutePath.Contains(url.ToCacheKey()))
+           // {
+              currentImage = null;
+              Debug.WriteLine("Start GetLocalImagePath: {0}", DeviceStatus.ApplicationPeakMemoryUsage);
+              await CustomRijksService.GetLocalImagePath(url, key);
+              Debug.WriteLine("Finish GetLocalImagePath: {0}", DeviceStatus.ApplicationPeakMemoryUsage);
 
-              await sh.SaveAsync(DateTime.Now, fileName);
+              url = null;
 
-#if(DEBUG)  
-              a = DeviceStatus.ApplicationCurrentMemoryUsage;
-              if (a != null) { }
-#endif
-            }
+              FreeMemory();
 
-          }
+
+              // Set the lock screen background image.
+              Windows.Phone.System.UserProfile.LockScreen.SetImageUri(new Uri("ms-appdata:///Local/" + key, UriKind.Absolute));
+
+
+              //await sh.SaveAsync(DateTime.Now, fileName);
+
+
+            //}
+
+          //}
 
         }
         //else
@@ -125,6 +138,8 @@ namespace RijksLockScreen.WP.BackgroundTask
 #endif
 
       }
+
+      Debug.WriteLine("PEAK: {0}", DeviceStatus.ApplicationPeakMemoryUsage);
 
       // Call NotifyComplete to let the system know the agent is done working.
       NotifyComplete();

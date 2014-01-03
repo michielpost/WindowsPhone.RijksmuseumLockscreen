@@ -1,11 +1,10 @@
-﻿using Q42.RijksmuseumApi;
+﻿using Newtonsoft.Json.Linq;
+using Q42.RijksmuseumApi;
 using Q42.RijksmuseumApi.Interfaces;
 using Q42.RijksmuseumApi.Models;
 using Q42.WinRT.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace RijksLockScreen.WP.Services
@@ -15,15 +14,18 @@ namespace RijksLockScreen.WP.Services
     Task<ArtObjectDetails> GetArtObjectAsync();
     Task<Uri> GetWeblUriAsync();
     Task<Uri> GetLocalImageUri(Uri webUri);
+    Task<string> GetLocalImagePath(Uri webUri);
   }
 
   public class RijksService : IRijksService
   {
     public IRijksClient _client;
 
+    public const string _apiKey = "EWkwIpWi";
+
     public RijksService(string language = "en")
     {
-      _client = new RijksClient("EWkwIpWi", language);
+      _client = new RijksClient(_apiKey, language);
     }
 
     public async Task<ArtObjectDetails> GetArtObjectAsync()
@@ -50,10 +52,12 @@ namespace RijksLockScreen.WP.Services
       //var currentObject = collection.ArtObjects.First();
 
       var objectOfTheDay = await _client.GetObjectOfTheDay();
-      var currentObject = await _client.GetCollectionDetails(objectOfTheDay);
-      var url = currentObject.ArtObject.WebImage.Url;
+      //var currentObject = await _client.GetCollectionDetails(objectOfTheDay);
+      var url = await this.GetCollectionDetails(objectOfTheDay);
+      objectOfTheDay = null;
+      //var url = currentObject.ArtObject.WebImage.Url;
 
-      url = url.Replace("=s0", "=s768-c");
+      url = url.Replace("=s0", "=s480-c");
 
       return new Uri(url);
     }
@@ -75,6 +79,52 @@ namespace RijksLockScreen.WP.Services
 
       return localUri;
 
+    }
+
+    public async Task<string> GetLocalImagePath(Uri webUri)
+    {
+      //First delete all old images
+      //try
+      //{
+      //  await WebDataCache.ClearAll();
+
+      //}
+      //catch(Exception e) 
+      //{
+      //}
+
+      //Download and save image
+      var localUri = await WebDataCache.GetLocalUriAsync(webUri);
+
+      return localUri.AbsolutePath;
+
+    }
+
+    /// <summary>
+    /// https://www.rijksmuseum.nl/api/nl/collection/sk-c-5?key=fakekey&format=json
+    /// </summary>
+    /// <param name="objectNumber"></param>
+    /// <returns></returns>
+    public async Task<string> GetCollectionDetails(string objectNumber)
+    {
+      if (string.IsNullOrEmpty(objectNumber))
+        throw new ArgumentNullException("objectNumber");
+
+      //Create URL
+      Uri uri = new Uri(string.Format("https://www.rijksmuseum.nl/api/nl/collection/{0}?key={1}&format=json", objectNumber, _apiKey));
+
+      //Do HTTP Request
+      HttpClient client = new HttpClient();
+      string stringResult = await client.GetStringAsync(uri).ConfigureAwait(false);
+      client = null; //Free memory
+      uri = null; //Free memory
+
+      //Parse JSON
+      JObject jresponse = JObject.Parse(stringResult);
+      var result = jresponse["artObject"]["webImage"]["url"].ToString();
+      jresponse = null; //Free memory
+
+      return result;
     }
   }
 }

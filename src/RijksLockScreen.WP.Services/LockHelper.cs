@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace RijksLockScreen.WP.Services
 {
@@ -38,8 +34,8 @@ namespace RijksLockScreen.WP.Services
           Windows.Phone.System.UserProfile.LockScreen.SetImageUri(uri);
 
           // Get the URI of the lock screen background image.
-          var currentImage = Windows.Phone.System.UserProfile.LockScreen.GetImageUri();
-          System.Diagnostics.Debug.WriteLine("The new lock screen background image is set to {0}", currentImage.ToString());
+          //var currentImage = Windows.Phone.System.UserProfile.LockScreen.GetImageUri();
+          //System.Diagnostics.Debug.WriteLine("The new lock screen background image is set to {0}", currentImage.ToString());
 
           return true;
         }
