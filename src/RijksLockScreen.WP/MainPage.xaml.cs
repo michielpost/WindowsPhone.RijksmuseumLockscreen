@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using RijksLockScreen.WP.Resources;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Tasks;
+using RijksLockScreen.WP.ViewModel;
 
 namespace RijksLockScreen.WP
 {
@@ -121,6 +122,11 @@ namespace RijksLockScreen.WP
     {
       // Launch URI for the lock screen settings screen.
       var op = await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings-lock:"));
+    }
+
+    private void TextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+    {
+      ((MainViewModel)this.DataContext).ShowWebsiteCommand.Execute(null);
     }
   }
 }

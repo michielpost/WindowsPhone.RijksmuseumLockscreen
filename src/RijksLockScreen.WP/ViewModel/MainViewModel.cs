@@ -1,6 +1,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using Microsoft.Phone.Tasks;
 using Q42.RijksmuseumApi.Models;
 using Q42.WinRT.Portable.Data;
 using RijksLockScreen.WP.Resources;
@@ -83,6 +84,7 @@ namespace RijksLockScreen.WP.ViewModel
     public IRijksService RijksService { get; set; }
 
     public RelayCommand SetLockScreenCommand { get; set; }
+    public RelayCommand ShowWebsiteCommand { get; set; }
 
 
     /// <summary>
@@ -95,6 +97,7 @@ namespace RijksLockScreen.WP.ViewModel
       DataLoader = new DataLoader();
 
       SetLockScreenCommand = new RelayCommand(SetLockScreen);
+      ShowWebsiteCommand = new RelayCommand(ShowWebsite);
 
       ////if (IsInDesignMode)
       ////{
@@ -106,6 +109,18 @@ namespace RijksLockScreen.WP.ViewModel
       ////}
 
       Initialize();
+    }
+
+    private void ShowWebsite()
+    {
+      //if (this.ArtObject != null
+      //  && this.ArtObject.Links != null 
+      //  && this.ArtObject.Links.Web != null)
+      //{
+      //  WebBrowserTask task = new WebBrowserTask();
+      //  task.Uri = new Uri(this.ArtObject.Links.Web);
+      //  task.Show();
+      //}
     }
 
    
