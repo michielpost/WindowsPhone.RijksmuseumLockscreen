@@ -160,7 +160,8 @@ namespace RijksLockScreen.WP.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The current image is set as lockscreen wallpaper. Your lockscreen will be updated daily with new images..
+        ///   Looks up a localized string similar to The current image is set as lockscreen wallpaper. Your lockscreen will be updated daily with new images.
+        ///NOTICE: You must open this app every 2 weeks to keep the updating of your lockscreen active..
         /// </summary>
         public static string UserOptionYes {
             get {

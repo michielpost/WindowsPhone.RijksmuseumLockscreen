@@ -153,6 +153,7 @@
     <value>Could not load images. Check your internet connection and try again.</value>
   </data>
   <data name="UserOptionYes" xml:space="preserve">
-    <value>The current image is set as lockscreen wallpaper. Your lockscreen will be updated daily with new images.</value>
+    <value>The current image is set as lockscreen wallpaper. Your lockscreen will be updated daily with new images.
+NOTICE: You must open this app every 2 weeks to keep the updating of your lockscreen active.</value>
   </data>
 </root>

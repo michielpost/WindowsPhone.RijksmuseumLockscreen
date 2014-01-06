@@ -153,6 +153,7 @@
     <value>Kon geen data laden. Check je internet connectie en probeer het nog eens.</value>
   </data>
   <data name="UserOptionYes" xml:space="preserve">
-    <value>Dit plaatje is nu je lockscreen. Dagelijks zal je lockscreen automatisch geupdate worden met een nieuw plaatje.</value>
+    <value>Dit plaatje is nu je lockscreen. Dagelijks zal je lockscreen automatisch geupdate worden met een nieuw plaatje.
+LET OP: Je moet de app elke 2 weken even openen, zodat het updaten van je lockscreen actief blijft.</value>
   </data>
 </root>
