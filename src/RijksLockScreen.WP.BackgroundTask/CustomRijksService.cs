@@ -64,25 +64,21 @@ namespace RijksLockScreen.WP.BackgroundTask
       //var collection = await _client.GetCollection(request);
       //var currentObject = collection.ArtObjects.First();
 
-      string stringResult = GetWebResponse("http://api.rijksmuseum.nl/data/widget2.jsp?lang=en");
+      //string stringResult = GetWebResponse("http://api.rijksmuseum.nl/data/widget2.jsp?lang=en");
+
+      //Debug.WriteLine("After webreq {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
+
+      ////Parse XML
+      //      int begin = stringResult.IndexOf("artobject id=") + 14;
+      //int end = stringResult.IndexOf("\"", begin);
 
 
-      //Do HTTP Request
-      //string stringResult = await client.GetStringAsync("http://api.rijksmuseum.nl/data/widget2.jsp?lang=en").ConfigureAwait(false);
-
-      Debug.WriteLine("After webreq {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
-
-      //Parse XML
-            int begin = stringResult.IndexOf("artobject id=") + 14;
-      int end = stringResult.IndexOf("\"", begin);
-
-
-      string objectOfTheDay = stringResult.Substring(begin, end - begin);
+      //string objectOfTheDay = stringResult.Substring(begin, end - begin);
 
       Debug.WriteLine("Before GetCollectionDetails {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
 
       //var currentObject = await _client.GetCollectionDetails(objectOfTheDay);
-      var url = await GetCollectionDetails(objectOfTheDay);
+      var url = await GetObjectOfTheDayUrl();
       //var url = currentObject.ArtObject.WebImage.Url;
 
       url = url.Replace("=s0", "=s480-c");
@@ -143,29 +139,29 @@ namespace RijksLockScreen.WP.BackgroundTask
     /// </summary>
     /// <param name="objectNumber"></param>
     /// <returns></returns>
-    public async static Task<string> GetCollectionDetails2(string objectNumber)
-    {
-      //Do HTTP Request
-      string stringResult = GetWebResponse(string.Format("https://www.rijksmuseum.nl/api/nl/collection/{0}?key={1}&format=json", objectNumber, _apiKey));
+    //public async static Task<string> GetCollectionDetails2(string objectNumber)
+    //{
+    //  //Do HTTP Request
+    //  string stringResult = GetWebResponse(string.Format("https://www.rijksmuseum.nl/api/nl/collection/{0}?key={1}&format=json", objectNumber, _apiKey));
 
-      //Parse JSON
-      JObject jresponse = JObject.Parse(stringResult);
-      stringResult = null;
-      var result = jresponse["artObject"]["webImage"]["url"].ToString();
-      jresponse = null; //Free memory
+    //  //Parse JSON
+    //  JObject jresponse = JObject.Parse(stringResult);
+    //  stringResult = null;
+    //  var result = jresponse["artObject"]["webImage"]["url"].ToString();
+    //  jresponse = null; //Free memory
 
-      return result;
-    }
+    //  return result;
+    //}
 
     /// <summary>
     /// https://www.rijksmuseum.nl/api/nl/collection/sk-c-5?key=fakekey&format=json
     /// </summary>
     /// <param name="objectNumber"></param>
     /// <returns></returns>
-    public async static Task<string> GetCollectionDetails(string objectNumber)
+    public async static Task<string> GetObjectOfTheDayUrl()
     {
       //Do HTTP Request
-      string stringResult = GetWebResponse(string.Format("https://www.rijksmuseum.nl/api/nl/collection?q={0}&key={1}&format=json", objectNumber, _apiKey));
+      string stringResult = GetWebResponse(string.Format("https://www.rijksmuseum.nl/api/nl/collection?key={0}&format=json&type=schilderij&p={1}&ps=1&imgonly=True&toppieces=True", _apiKey, DateTime.Now.DayOfYear));
 
       //Parse JSON
       JObject jresponse = JObject.Parse(stringResult);

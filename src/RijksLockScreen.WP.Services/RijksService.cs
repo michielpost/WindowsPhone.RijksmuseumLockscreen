@@ -4,6 +4,7 @@ using Q42.RijksmuseumApi.Interfaces;
 using Q42.RijksmuseumApi.Models;
 using Q42.WinRT.Data;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace RijksLockScreen.WP.Services
   public interface IRijksService
   {
     Task<ArtObjectDetails> GetArtObjectAsync();
-    Task<Uri> GetWeblUriAsync();
+    //Task<Uri> GetWeblUriAsync();
     Task<Uri> GetLocalImageUri(Uri webUri);
     Task<string> GetLocalImagePath(Uri webUri);
   }
@@ -20,17 +21,19 @@ namespace RijksLockScreen.WP.Services
   public class RijksService : IRijksService
   {
     public IRijksClient _client;
+    private string _language;
 
     public const string _apiKey = "EWkwIpWi";
 
     public RijksService(string language = "en")
     {
       _client = new RijksClient(_apiKey, language);
+      _language = language;
     }
 
     public async Task<ArtObjectDetails> GetArtObjectAsync()
     {
-      var objectOfTheDay = await _client.GetObjectOfTheDay();
+      var objectOfTheDay = await this.GetObjectOfTheDay();
       var currentObject = await _client.GetCollectionDetails(objectOfTheDay);
       var currentArtObject = currentObject.ArtObject;
 
@@ -39,28 +42,46 @@ namespace RijksLockScreen.WP.Services
       return currentArtObject;
     }
 
-    public async Task<Uri> GetWeblUriAsync()
+    private async Task<string> GetObjectOfTheDay()
     {
-      //var request = new Q42.RijksmuseumApi.Models.CollectionSearchRequest()
-      //  {
-      //    ImageOnly = true,
-      //    TopPiecesOnly = true
-      //  };
+      int dayOfTheYear = DateTime.Now.DayOfYear;
 
-      ////Get current object id
-      //var collection = await _client.GetCollection(request);
-      //var currentObject = collection.ArtObjects.First();
+      string type = "schilderij";
+      if (_language == "en")
+        type = "painting";
 
-      var objectOfTheDay = await _client.GetObjectOfTheDay();
-      //var currentObject = await _client.GetCollectionDetails(objectOfTheDay);
-      var url = await this.GetCollectionDetails(objectOfTheDay);
-      objectOfTheDay = null;
-      //var url = currentObject.ArtObject.WebImage.Url;
+      var result = await _client.GetCollection(new CollectionSearchRequest() { ImageOnly = true, TopPiecesOnly = true, Type = type }, page: dayOfTheYear, pageSize: 1);
 
-      url = url.Replace("=s0", "=s480-c");
+      var obj =  result.ArtObjects.FirstOrDefault();
 
-      return new Uri(url);
+      if (obj != null)
+        return obj.ObjectNumber;
+      else
+        return "SK-C-5";
     }
+
+    //public async Task<Uri> GetWeblUriAsync()
+    //{
+    //  //var request = new Q42.RijksmuseumApi.Models.CollectionSearchRequest()
+    //  //  {
+    //  //    ImageOnly = true,
+    //  //    TopPiecesOnly = true
+    //  //  };
+
+    //  ////Get current object id
+    //  //var collection = await _client.GetCollection(request);
+    //  //var currentObject = collection.ArtObjects.First();
+
+    //  var objectOfTheDay = await _client.GetObjectOfTheDay();
+    //  //var currentObject = await _client.GetCollectionDetails(objectOfTheDay);
+    //  var url = await this.GetCollectionDetails(objectOfTheDay);
+    //  objectOfTheDay = null;
+    //  //var url = currentObject.ArtObject.WebImage.Url;
+
+    //  url = url.Replace("=s0", "=s480-c");
+
+    //  return new Uri(url);
+    //}
 
     public async Task<Uri> GetLocalImageUri(Uri webUri)
     {
@@ -83,16 +104,6 @@ namespace RijksLockScreen.WP.Services
 
     public async Task<string> GetLocalImagePath(Uri webUri)
     {
-      //First delete all old images
-      //try
-      //{
-      //  await WebDataCache.ClearAll();
-
-      //}
-      //catch(Exception e) 
-      //{
-      //}
-
       //Download and save image
       var localUri = await WebDataCache.GetLocalUriAsync(webUri);
 
