@@ -64,13 +64,13 @@ namespace RijksLockScreen.WP.BackgroundTask
 
         if (LockScreenManager.IsProvidedByCurrentApplication)
         {
-          //string fileName = "lastUpdate";
-          //Q42.WinRT.Storage.StorageHelper<DateTime?> sh = new Q42.WinRT.Storage.StorageHelper<DateTime?>(Q42.WinRT.Storage.StorageType.Local);
-          //var lastUpdate = await sh.LoadAsync(fileName);
+          string fileName = "lastUpdate";
+          Q42.WinRT.Storage.StorageHelper<DateTime?> sh = new Q42.WinRT.Storage.StorageHelper<DateTime?>(Q42.WinRT.Storage.StorageType.Local);
+          var lastUpdate = await sh.LoadAsync(fileName);
 
-          //if (!lastUpdate.HasValue
-          //  || lastUpdate.Value.Date != DateTime.Now.Date)
-          //{
+          if (!lastUpdate.HasValue
+            || lastUpdate.Value.Date != DateTime.Now.Date)
+          {
 
             // Get the URI of the lock screen background image.
             // NOTE: GetImageUri throws is the app is not the current application 
@@ -90,7 +90,7 @@ namespace RijksLockScreen.WP.BackgroundTask
             //Check if it's not already the current image
             //if (!currentImage.AbsolutePath.Contains(url.ToCacheKey()))
            // {
-              currentImage = null;
+              //currentImage = null;
               Debug.WriteLine("Start GetLocalImagePath: {0}", DeviceStatus.ApplicationPeakMemoryUsage);
               await CustomRijksService.GetLocalImagePath(url, key);
               Debug.WriteLine("Finish GetLocalImagePath: {0}", DeviceStatus.ApplicationPeakMemoryUsage);
@@ -104,12 +104,12 @@ namespace RijksLockScreen.WP.BackgroundTask
               Windows.Phone.System.UserProfile.LockScreen.SetImageUri(new Uri("ms-appdata:///Local/" + key, UriKind.Absolute));
 
 
-              //await sh.SaveAsync(DateTime.Now, fileName);
+              await sh.SaveAsync(DateTime.Now, fileName);
 
 
             //}
 
-          //}
+          }
 
         }
         //else

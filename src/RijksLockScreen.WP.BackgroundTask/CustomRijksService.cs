@@ -54,29 +54,6 @@ namespace RijksLockScreen.WP.BackgroundTask
     {
       Debug.WriteLine("Start GetWeblUriAsync {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
 
-      //var request = new Q42.RijksmuseumApi.Models.CollectionSearchRequest()
-      //  {
-      //    ImageOnly = true,
-      //    TopPiecesOnly = true
-      //  };
-
-      ////Get current object id
-      //var collection = await _client.GetCollection(request);
-      //var currentObject = collection.ArtObjects.First();
-
-      //string stringResult = GetWebResponse("http://api.rijksmuseum.nl/data/widget2.jsp?lang=en");
-
-      //Debug.WriteLine("After webreq {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
-
-      ////Parse XML
-      //      int begin = stringResult.IndexOf("artobject id=") + 14;
-      //int end = stringResult.IndexOf("\"", begin);
-
-
-      //string objectOfTheDay = stringResult.Substring(begin, end - begin);
-
-      Debug.WriteLine("Before GetCollectionDetails {0}", DeviceStatus.ApplicationCurrentMemoryUsage);
-
       //var currentObject = await _client.GetCollectionDetails(objectOfTheDay);
       var url = await GetObjectOfTheDayUrl();
       //var url = currentObject.ArtObject.WebImage.Url;
@@ -134,24 +111,6 @@ namespace RijksLockScreen.WP.BackgroundTask
             
     }
 
-    /// <summary>
-    /// https://www.rijksmuseum.nl/api/nl/collection/sk-c-5?key=fakekey&format=json
-    /// </summary>
-    /// <param name="objectNumber"></param>
-    /// <returns></returns>
-    //public async static Task<string> GetCollectionDetails2(string objectNumber)
-    //{
-    //  //Do HTTP Request
-    //  string stringResult = GetWebResponse(string.Format("https://www.rijksmuseum.nl/api/nl/collection/{0}?key={1}&format=json", objectNumber, _apiKey));
-
-    //  //Parse JSON
-    //  JObject jresponse = JObject.Parse(stringResult);
-    //  stringResult = null;
-    //  var result = jresponse["artObject"]["webImage"]["url"].ToString();
-    //  jresponse = null; //Free memory
-
-    //  return result;
-    //}
 
     /// <summary>
     /// https://www.rijksmuseum.nl/api/nl/collection/sk-c-5?key=fakekey&format=json

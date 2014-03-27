@@ -60,29 +60,6 @@ namespace RijksLockScreen.WP.Services
         return "SK-C-5";
     }
 
-    //public async Task<Uri> GetWeblUriAsync()
-    //{
-    //  //var request = new Q42.RijksmuseumApi.Models.CollectionSearchRequest()
-    //  //  {
-    //  //    ImageOnly = true,
-    //  //    TopPiecesOnly = true
-    //  //  };
-
-    //  ////Get current object id
-    //  //var collection = await _client.GetCollection(request);
-    //  //var currentObject = collection.ArtObjects.First();
-
-    //  var objectOfTheDay = await _client.GetObjectOfTheDay();
-    //  //var currentObject = await _client.GetCollectionDetails(objectOfTheDay);
-    //  var url = await this.GetCollectionDetails(objectOfTheDay);
-    //  objectOfTheDay = null;
-    //  //var url = currentObject.ArtObject.WebImage.Url;
-
-    //  url = url.Replace("=s0", "=s480-c");
-
-    //  return new Uri(url);
-    //}
-
     public async Task<Uri> GetLocalImageUri(Uri webUri)
     {
       //First delete all old images
